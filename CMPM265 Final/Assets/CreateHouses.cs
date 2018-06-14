@@ -19,7 +19,9 @@ public class CreateHouses : MonoBehaviour
     public AXGameObject topGar;
     public AXGameObject field;
     public AXGameObject land;
-    public List<Material> Fence, Door, Backdoor, Garage, BigWindow, LittleWindow, Walls, Roof, Grass, Landscape;
+    public AXGameObject swimmingPool;
+    public AXGameObject monument;
+    public List<Material> Fence, Door, Backdoor, Garage, BigWindow, LittleWindow, Walls, Roof, Grass, Landscape, Pool, Statue;
 
     float randX, posX, distX, distZ;
 
@@ -32,7 +34,9 @@ public class CreateHouses : MonoBehaviour
             distX = model.transform.position.x;
             posX = distX;
             distZ = model.transform.position.z;
-
+            model.getParameter("Chair_Enabled").initiateRipple_setBoolValueFromGUIChange(false);
+            model.getParameter("Pool_Enabled").initiateRipple_setBoolValueFromGUIChange(false);
+            model.getParameter("Statue_Enabled").initiateRipple_setBoolValueFromGUIChange(false);
         }
     }
 
@@ -41,7 +45,7 @@ public class CreateHouses : MonoBehaviour
         //clones a new house with different dimensions 
         if (Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.Backspace))
         {
-            GenerateMaterials();
+            //GenerateMaterials();
             GenerateHouse();
         }
     }
@@ -60,7 +64,7 @@ public class CreateHouses : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             distX = posX;
-            distZ += (27.5f * SizeRange.y * 2f);
+            distZ += (27.5f * SizeRange.y);
         }
 
         //Creates a new house
@@ -74,6 +78,8 @@ public class CreateHouses : MonoBehaviour
 
         //changes the length of the landscape
         newModel.getParameter("Full House_Scale_Z").initiateRipple_setFloatValueFromGUIChange(Random.Range(SizeRange.x, SizeRange.y));
+
+        GenerateBackyard(newModel);
 
         newModel.build();
     }
@@ -132,6 +138,54 @@ public class CreateHouses : MonoBehaviour
         //changes the landscape to a new random material
         int index9 = Random.Range(0, Landscape.Count);
         land.parametricObject.axMat.mat = Landscape[index9];
+    }
+
+    void GenerateBackyard(AXModel mod)
+    {
+        //changes the backyard content
+        float choice = Random.Range(0f, 1f);
+        mod.getParameter("Chair_Enabled").initiateRipple_setBoolValueFromGUIChange(false);
+        mod.getParameter("Pool_Enabled").initiateRipple_setBoolValueFromGUIChange(false);
+        mod.getParameter("Statue_Enabled").initiateRipple_setBoolValueFromGUIChange(false);
+
+        if (choice < .4f)
+        {
+            //changes the position of the chair
+            mod.getParameter("Chair_Enabled").initiateRipple_setBoolValueFromGUIChange(true);
+            mod.getParameter("Chair_Trans_X").initiateRipple_setFloatValueFromGUIChange(Random.Range(-8.5f, 9.5f));
+            mod.getParameter("Chair_Trans_Z").initiateRipple_setFloatValueFromGUIChange(Random.Range(-3.5f, 2.5f));
+            mod.getParameter("Chair_Rot_Y").initiateRipple_setFloatValueFromGUIChange(Random.Range(0f, 360f));
+        }
+
+        else if (choice < .65f)
+        {
+            //changes the scale of the pool
+            mod.getParameter("Pool_Enabled").initiateRipple_setBoolValueFromGUIChange(true);
+            mod.getParameter("Pool_Scale_X").initiateRipple_setFloatValueFromGUIChange(Random.Range(0.5f, 2.5f));
+            mod.getParameter("Pool_Scale_Y").initiateRipple_setFloatValueFromGUIChange(Random.Range(0.1f, 1.5f));
+            mod.getParameter("Pool_Scale_Z").initiateRipple_setFloatValueFromGUIChange(Random.Range(0.1f, 1f));
+
+            //changes the pool to a new random material
+            int index = Random.Range(0, Pool.Count);
+            swimmingPool.parametricObject.axMat.mat = Pool[index];
+        }
+
+        else
+        {
+            //changes the scale/position of the statue
+            float scaleX = Random.Range(0.5f, 4.5f);
+            float scaleZ = Random.Range(0.5f, 1.5f);
+            mod.getParameter("Statue_Enabled").initiateRipple_setBoolValueFromGUIChange(true);
+            mod.getParameter("Statue_Scale_X").initiateRipple_setFloatValueFromGUIChange(scaleX);
+            mod.getParameter("Statue_Scale_Z").initiateRipple_setFloatValueFromGUIChange(scaleZ);
+            mod.getParameter("Statue_Rot_Y").initiateRipple_setFloatValueFromGUIChange(Random.Range(0f, 360f));
+            mod.getParameter("Statue_Trans_X").initiateRipple_setFloatValueFromGUIChange(Random.Range(-10f + scaleX, 10f - scaleX));
+            mod.getParameter("Statue_Trans_Z").initiateRipple_setFloatValueFromGUIChange(Random.Range(-3f + scaleX, 3f - scaleX));
+
+            //changes the statue to a new random material
+            int index1 = Random.Range(0, Statue.Count);
+            monument.parametricObject.axMat.mat = Statue[index1];
+        }
     }
 }
 
