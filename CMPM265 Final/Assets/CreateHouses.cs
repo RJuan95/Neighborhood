@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using AX;
+using System.Linq;
 
 public class CreateHouses : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class CreateHouses : MonoBehaviour
     private void Update()
     {
         //clones a new house with different dimensions 
-        if (Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift))
         {
             GenerateMaterials();
             GenerateHouse();
@@ -62,7 +63,7 @@ public class CreateHouses : MonoBehaviour
             distX += (10.2f * randX) + (10.2f * oldRandX);
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift))
         {
             distX = posX;
             distZ += (27.5f * SizeRange.y);
