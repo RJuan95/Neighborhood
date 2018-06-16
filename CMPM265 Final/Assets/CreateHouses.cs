@@ -23,6 +23,7 @@ public class CreateHouses : MonoBehaviour
     public AXGameObject monument;
     private TerrainGenerator field;
     public List<Material> Fence, Door, Backdoor, Garage, BigWindow, LittleWindow, Walls, Roof, Grass, Landscape, Pool, Statue;
+    public List<TerrainData> Terrains;
 
     float randX, randY, randZ, posX, distX, distZ;
 
@@ -31,7 +32,8 @@ public class CreateHouses : MonoBehaviour
     {
         if (model != null)
         {
-            randX = model.transform.localScale.x;
+            //randX = model.transform.localScale.x;
+            randX = 1.5f;
             distX = model.transform.position.x;
             posX = distX;
             distZ = model.transform.position.z;
@@ -74,15 +76,18 @@ public class CreateHouses : MonoBehaviour
 
         //changes the width of the landscape
         newModel.getParameter("Full House_Scale_X").initiateRipple_setFloatValueFromGUIChange(randX);
-        field.scaleX = randX;
+        //newModel.GetComponentInChildren<TerrainGenerator>().scaleX = randX;
+        //field.scaleX = randX;
 
         //changes the height of the landscape
         newModel.getParameter("Full House_Scale_Y").initiateRipple_setFloatValueFromGUIChange(randY);
-        field.scaleY = randY;
+        //newModel.GetComponentInChildren<TerrainGenerator>().scaleY = randY;
+        //field.scaleY = randY;
 
         //changes the length of the landscape
         newModel.getParameter("Full House_Scale_Z").initiateRipple_setFloatValueFromGUIChange(randZ);
-        field.scaleZ = randZ;
+        //newModel.GetComponentInChildren<TerrainGenerator>().scaleZ = randZ;
+        //field.scaleZ = randZ;
 
         GenerateBackyard(newModel);
 
@@ -138,7 +143,8 @@ public class CreateHouses : MonoBehaviour
 
         //changes the grass to a new random material
         field.timestamp = Random.Range(0f, 100f);
-        field.PerlinScale = Random.Range(700f, 900f);
+        field.PerlinScale = Random.Range(2f, 6f);
+        //field.PerlinScale = Random.Range(700f, 900f);
         //int index8 = Random.Range(0, Grass.Count);
         //field.parametricObject.axMat.mat = Grass[index8];
 

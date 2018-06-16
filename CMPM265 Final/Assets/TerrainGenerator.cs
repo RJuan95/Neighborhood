@@ -18,6 +18,18 @@ public class TerrainGenerator : MonoBehaviour {
     public static int width = 256;
     public static int height = 20;
     public float scaleX, scaleY, scaleZ;
+    public TerrainData T;
+
+    private void Start()
+    {
+        Terrain terr = GetComponent<Terrain>();
+        int i = Random.Range(0, GameObject.Find("Main Camera").GetComponent<CreateHouses>().Terrains.Count);
+        terr.terrainData = GameObject.Find("Main Camera").GetComponent<CreateHouses>().Terrains[i];
+        scaleX = GameObject.Find("Main Camera").GetComponent<CreateHouses>().SizeRange.y;
+        scaleX *= -1f;
+        scaleY = scaleX;
+        scaleZ = scaleX;
+    }
 
     private void Update()
     {
@@ -28,7 +40,7 @@ public class TerrainGenerator : MonoBehaviour {
     TerrainData GenerateTerrain(TerrainData data)
     {
         data.heightmapResolution = width + 1;
-        data.size = new Vector3(width*4f, height, depth*4f);
+        data.size = new Vector3(scaleX * width / 12.5f, height, scaleZ * depth / 9.2f);
         data.SetHeights(0, 0, GenerateHeight());
         return data;
     }

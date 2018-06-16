@@ -29,13 +29,13 @@ public class MoveCamera : MonoBehaviour {
         {
             gameObject.transform.position -= Vector3.up;
         }
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Input.GetKey(KeyCode.N))
         {
-            gameObject.transform.position -= Vector3.forward * 20f;
+            gameObject.transform.position -= Vector3.forward;
         }
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKey(KeyCode.M))
         {
-            gameObject.transform.position += Vector3.forward * 20f;
+            gameObject.transform.position += Vector3.forward;
         }
 
         //rotates the camera with the mouse
