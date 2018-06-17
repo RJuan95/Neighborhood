@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AX;
 using System.Linq;
+using AXGeometryTools;
 
 public class CreateHouses : MonoBehaviour
 {
@@ -47,7 +48,7 @@ public class CreateHouses : MonoBehaviour
         //clones a new house with different dimensions 
         if (Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift))
         {
-            GenerateMaterials();
+            //GenerateMaterials();
             GenerateHouse();
         }
     }
@@ -73,6 +74,8 @@ public class CreateHouses : MonoBehaviour
 
         //Creates a new house
         AXModel newModel = Instantiate(model, new Vector3(distX, model.transform.position.y, distZ), Quaternion.identity);
+
+        GenerateDesign(newModel);
 
         //changes the width of the landscape
         newModel.getParameter("Full House_Scale_X").initiateRipple_setFloatValueFromGUIChange(randX);
@@ -200,6 +203,32 @@ public class CreateHouses : MonoBehaviour
             monument.parametricObject.axMat.mat = Statue[index1];
         }
     }
+
+    void GenerateDesign(AXModel mod)
+    {
+        AXParametricObject nodePO = mod.parametricObjects.FirstOrDefault(p => p.Name == "House Roof Design");
+        nodePO.curve.Clear();
+
+        float point0 = Random.Range(-11.1f, -8f);
+        float point1 = Random.Range(-10f, -8f);
+        float point2 = Random.Range(-11f, -8f);
+        float point3 = Random.Range(-11f, -8f);
+        float point4 = Random.Range(-10.5f, -8f);
+        float point5 = Random.Range(-11.1f, -8f);
+
+        //assign point values for curves
+        nodePO.curve.Add(new CurvePoint(point0, -17.37f));
+        nodePO.curve.Add(new CurvePoint(point1, -14f));
+        nodePO.curve.Add(new CurvePoint(point2, -11f));
+        nodePO.curve.Add(new CurvePoint(point3, -8));
+        nodePO.curve.Add(new CurvePoint(point4, -6f));
+        nodePO.curve.Add(new CurvePoint(point5, -3.75f));
+        nodePO.curve.Add(new CurvePoint(-11.4f, -3.75f));
+        nodePO.curve.Add(new CurvePoint(-10.8f, -6f));
+        nodePO.curve.Add(new CurvePoint(-11.3f, -8));
+        nodePO.curve.Add(new CurvePoint(-11.3f, -11f));
+        nodePO.curve.Add(new CurvePoint(-10.3f, -14f));
+        nodePO.curve.Add(new CurvePoint(-11.4f, -17.37f));
+
+    }
 }
-
-
