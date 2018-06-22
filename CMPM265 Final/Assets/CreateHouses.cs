@@ -48,7 +48,7 @@ public class CreateHouses : MonoBehaviour
         //clones a new house with different dimensions 
         if (Input.GetKeyDown(KeyCode.Space)|| Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift))
         {
-            //GenerateMaterials();
+            GenerateMaterials();
             GenerateHouse();
         }
     }
